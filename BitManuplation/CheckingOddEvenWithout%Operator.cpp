@@ -13,3 +13,13 @@ int main()
     }
     return 0;
 }
+
+
+
+
+// ~(not)
+// &(and gate)
+// |(or gate)
+// <<(left shift)
+// >>(right shift)
+// ^(XOR gate)
