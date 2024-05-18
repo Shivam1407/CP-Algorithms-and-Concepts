@@ -56,3 +56,7 @@ int main()
 
     return 0;
 }
+
+
+// TC = O(V+E)
+// SC = O(V) 

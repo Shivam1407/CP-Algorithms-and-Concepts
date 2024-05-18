@@ -60,6 +60,8 @@ int main()
     }
     cout << "Topological sorting of the graph: ";
     topologicalSort(adjList, n);
+
+    return 0;
 }
 
 
