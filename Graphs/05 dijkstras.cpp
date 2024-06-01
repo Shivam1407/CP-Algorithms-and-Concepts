@@ -59,3 +59,20 @@ int main()
 
     return 0;
 }
+
+
+
+// 5 6
+// 1 2 2
+// 1 3 3
+// 2 4 2
+// 3 4 5
+// 3 5 6
+// 4 5 1
+// 1
+
+// The shortest distance from node 1 to all other nodes is: 
+// Distance to node 2: 2
+// Distance to node 3: 3
+// Distance to node 4: 4
+// Distance to node 5: 5
