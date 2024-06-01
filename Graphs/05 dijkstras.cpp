@@ -30,8 +30,7 @@ void dijkstra(vector<vector<pair<int, int>>> &adjList, int startNode, int n)
 
     for (int i = 1; i <= n; i++)
     {
-        if (i == startNode)
-            continue;
+        
         if (dist[i] == INT_MAX)
             cout << "Node " << i << " is not reachable from the start node." << endl;
         else
@@ -41,15 +40,16 @@ void dijkstra(vector<vector<pair<int, int>>> &adjList, int startNode, int n)
 
 int main()
 {
-    int n, m;
-    cin >> n >> m;
+    int n, edges;
+    cin >> n >> edges;
     vector<vector<pair<int, int>>> adjList(n + 1);
 
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < edges; i++)
     {
         int u, v, w;
         cin >> u >> v >> w;
         adjList[u].push_back({v, w});
+        adjList[v].push_back({u, w});
     }
 
     int startNode;
@@ -72,7 +72,25 @@ int main()
 // 1
 
 // The shortest distance from node 1 to all other nodes is: 
+// Distance to node 1: 0
 // Distance to node 2: 2
 // Distance to node 3: 3
 // Distance to node 4: 4
 // Distance to node 5: 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// write the space and time complexity of the code
+// Time complexity: O(ElogV) + O(V) = O(ElogV)   becoz E >>> V and we are using min heap and each operation takes logV time
+// Space complexity: O(V) + O(E) + O(V) = O(V + E)
