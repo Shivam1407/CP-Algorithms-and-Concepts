@@ -9,7 +9,7 @@ using namespace std;
 #define print_1D_arr(a, n)     \
     for (ll i = 0; i < n; i++) \
     {                          \
-        cout << a[i] << ;      \
+        cout << a[i] << " ";   \
     }                          \
     cout << endl;
 #define in_1D_arr(a, n) \
@@ -34,25 +34,24 @@ bool all_same_element_in_arr(ll *arr, ll n)
 void solve();
 void memoSolve();
 bool tableSolve();
-bool SpacrOptimization();
+bool SpaceOptimization();
 
 //--------------------------------------------------MAIN---------------------------------------------------------------------------------------------------------------------------------------------------
 int main()
 {
-
-    solve(); // Recursion: O(2^n) time and O(n) space
-    memoSolve(); // Memoization: O(n*k) time and O(n*k) space
-    tableSolve(); // Tabulation: O(n*k) time and O(n*k) space
-    SpacrOptimization(); // SpaceOptimized: O(n*k) time and O(k) space
+    solve();             // Recursion: O(2^n) time and O(n) space
+    memoSolve();         // Memoization: O(n*k) time and O(n*k) space
+    tableSolve();        // Tabulation: O(n*k) time and O(n*k) space
+    SpaceOptimization(); // SpaceOptimized: O(n*k) time and O(k) space
 
     return 0;
 }
 //--------------------------------------------------SOLVE---------------------------------------------------------------------------------------------------------------------------------------------------
 
 int n = 4, k = 7;
-
 vector<int> a = {2, 3, 1, 10};
-/// Recurssive approach
+
+// Recurssive approach
 bool func(int k, int ind, vi &a)
 {
     if (k == 0)
@@ -71,14 +70,13 @@ bool func(int k, int ind, vi &a)
 
     return take || notTake;
 }
+
 void solve()
 {
-
     cout << "Recursion: " << (func(k, n - 1, a) ? "true" : "false") << endl;
 }
 
 // Memoization approach
-
 bool memo(int target, int ind, vi &a, vector<vi> &dp)
 {
     if (target == 0)
@@ -87,31 +85,24 @@ bool memo(int target, int ind, vi &a, vector<vi> &dp)
         return a[ind] == target;
 
     if (dp[ind][target] != -1)
-    {
         return dp[ind][target];
-    }
 
     bool notTake = memo(target, ind - 1, a, dp);
-
     bool take = false;
 
     if (target >= a[ind])
-    {
         take = memo(target - a[ind], ind - 1, a, dp);
-    }
 
     return dp[ind][target] = take | notTake;
 }
 
 void memoSolve()
 {
-
     vector<vi> dp(n, vi(k + 1, -1));
-    cout << "Memomization: " << (memo(k, n - 1, a, dp) ? "true" : "false") << endl;
+    cout << "Memoization: " << (memo(k, n - 1, a, dp) ? "true" : "false") << endl;
 }
 
-// Tablulation(bottoms Up);
-
+// Tabulation (Bottom-Up) approach
 bool tableSolve()
 {
     vector<vector<bool>> dp(n, vector<bool>(k + 1, 0));
@@ -121,7 +112,7 @@ bool tableSolve()
         dp[i][0] = 1;
     }
 
-    dp[0][a[0]] == 1;
+    dp[0][a[0]] = 1;
 
     f(ind, 1, n)
     {
@@ -141,14 +132,15 @@ bool tableSolve()
     cout << "Tabulation: " << (dp[n - 1][k] ? "true" : "false") << endl;
 }
 
-// SPace Optimization
-bool SpacrOptimization()
+// Space Optimization approach
+bool SpaceOptimization()
 {
     vector<bool> prev(k + 1, 0), curr(k + 1, 0);
 
     prev[0] = curr[0] = true;
 
-    prev[a[0]] == 1;
+    if (a[0] <= k)
+        prev[a[0]] = 1;
 
     f(ind, 1, n)
     {
@@ -161,18 +153,11 @@ bool SpacrOptimization()
                 take = prev[target - a[ind]];
             }
 
-            prev[target] = take | notTake;
-
-            prev = curr;
+            curr[target] = take | notTake;
         }
+        prev = curr;
     }
 
-    cout << "SpaceOptimized: " << (curr[k] ? "true" : "false") << endl;
+    cout << "SpaceOptimized: " << (prev[k] ? "true" : "false") << endl;
+    return prev[k];
 }
-
-
-// Recursion: false
-// Memomization: false
-// Tabulation: false
-// SpaceOptimized: false
-
