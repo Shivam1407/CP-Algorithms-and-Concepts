@@ -49,11 +49,13 @@ int n = 9, k = 1;
 vector<int> a = {0, 0, 0, 0, 0, 0, 0, 0, 1};
 int recurr(int ind, int n, vi &a, int k)
 {
-    if (k == 0)
-        return 1;
     if (ind == 0)
     {
-        return a[ind] == k;
+        if (k == 0 && a[0] == 0)
+            return 2;
+        if (k == 0 || k == a[0])
+            return 1;
+        return 0;
     }
     int notTake = recurr(ind - 1, n, a, k);
     int take = 0;
@@ -74,13 +76,14 @@ void solve()
 
 int memo(int ind, int n, int k, vi &a, vector<vector<int>> &dp)
 {
-    if (k == 0)
-    {
-        return 1;
-    }
+
     if (ind == 0)
     {
-        return a[ind] == k;
+        if (k == 0 && a[0] == 0)
+            return 2;
+        if (k == 0 || k == a[0])
+            return 1;
+        return 0;
     }
 
     if (dp[ind][k] != -1)
@@ -116,14 +119,20 @@ void tableSolve()
         dp[i][0] = 1;
     }
 
-    if (k >= a[0])
-        dp[0][a[0]] = 1;
-
-    
-
-    f(i, 1, n)
+    if (a[0] <= k)
     {
-        for(int target = 1; target <= k; target++)
+        dp[0][a[0]] = 1;
+    }
+
+    if (a[0] == 0)
+    {
+        dp[0][0] = 2; 
+    }
+
+    // Fill the dp table
+    for (int i = 1; i < n; i++)
+    {
+        for (int target = 0; target <= k; target++)
         {
             int notTake = dp[i - 1][target];
             int take = 0;
@@ -138,7 +147,6 @@ void tableSolve()
 
     cout << "Tabulation result : " << dp[n - 1][k] << endl;
 }
-
 
 // Space Optimization
 

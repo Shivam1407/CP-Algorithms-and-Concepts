@@ -1,0 +1,24 @@
+ we would be given a an array 
+                                2 9 3 6 7 4 3 4
+now we would be given size of subarray as n = 3(lets assume)
+
+now we would take each sub array 
+                     293 936 367 674 743 434
+
+                     now we will sum all these sub array and give the maximum output sum;
+
+
+
+
+
+
+
+
+
+                     array or string     +     sub array or substring       + largest/max/min/smallest/any operation + k=windowsize
+
+
+types of sliding windows 
+                ---------- fixed -> in this the size of window is fixed; eg  saari windows ka sum lene ke baad uss sum ko maximize karna 
+                ----------- variable -> in this the size of window is variable i.e we would be given condotions based on which we would have to find the window size. it may use data structures like maps or lists 
+                ex ke liye if we have sum 5 then we will find all the windows with sum = 5 and then we will find the largest windows among them
