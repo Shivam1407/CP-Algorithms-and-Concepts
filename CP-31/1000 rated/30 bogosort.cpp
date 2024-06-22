@@ -20,35 +20,32 @@ bool all_same_element_in_arr(ll *arr, ll n){for(ll i=0; i<n-1; i++){if(arr[i]!=a
 void solve();
 //--------------------------------------------------MAIN---------------------------------------------------------------------------------------------------------------------------------------------------
 int main() {
-    solve();
+    ll t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
     return 0;
 }
 //--------------------------------------------------SOLVE---------------------------------------------------------------------------------------------------------------------------------------------------
 void solve() {
     lli n;
     cin >> n;
+    vli a(n);
+    in_1D_arr(a, n);
 
-    string s;
-    cin >> s;
+    rsrt(a);
 
-   // create a string which less lexcographical than s
-    string s1 = s;
-    sort(s1.begin(), s1.end());
-    if(s1 == s)
+    for (int j = 1; j < n; j++)
     {
-        cout << "NO" << endl;
-        return;
-    }
-
-    f(i, 0, n-1)
-    {
-        if(s[i] > s[i+1])
+        for (int i = 0; i < j; i++)
         {
-            cout << "YES" << endl;
-            cout << i + 1 << " " << i + 2 << endl;
-            return;
+            if(j-a[j] == i-a[i])
+            {
+                swap(a[j], a[i]);
+            }
         }
     }
 
-    cout << "NO" << endl;
+        print_1D_arr(a, n);
 }
