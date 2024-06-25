@@ -5,7 +5,6 @@
 
 using namespace std;
 using namespace chrono;
-using namespace __gnu_pbds;
 
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 #define MOD 1000000007
@@ -43,6 +42,7 @@ typedef long long int lli;
 typedef vector<ll> vll;
 typedef vector<int> vi;
 typedef vector<vector<ll>> vvll;
+typedef vector<bool> vbol;
 
 void _print(ll t) {cerr << t;}
 void _print(int t) {cerr << t;}
@@ -81,132 +81,37 @@ ll mod_div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprim
 ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n /= 2;} for (ll i = 3; i <= sqrt(n); i += 2) {if (n % i == 0) {while (n % i == 0)n /= i; number = (number / i * (i - 1));}} if (n > 1)number = (number / n * (n - 1)) ; return number;}
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
-int table(int n, int w, vector<int> wt, vector<int> val, int ind) // O(n*w) time and O(n*w) space
-{
-    vvll dp(n, vll(w + 1, 0)); // w+1 because we can take 0 weight also so [0,w]
+void solve() {
+    string s1, s2;
+    cin >> s1 >> s2;
+    int n = s1.size();
+    int m = s2.size();
 
-    f(j,0,n)
+    vvll dp(n + 1, vll(m + 1, 0));
+    int ans = 0;
+    int end = 0;
+
+    for (int i = 1; i <= n; i++)
     {
-        if(wt[0] <= j)
+        for (int j = 1; j <= m; j++)
         {
-            dp[0][j] = (j/wt[0]) * val[0];
-        }
-        
-    }
-
-
-    f(i,1,n)
-    {
-        f(j,0,w+1)
-        {
-            int notTake = dp[i - 1][j];
-            int take = -INF;
-
-            if(wt[i] <= j)
+            if(s1[i-1] == s2[j-1])
             {
-                take = val[i] + dp[i][j - wt[i]];
+                int val = 1 + dp[i - 1][j - 1];
+                dp[i][j] = val;
+                ans = max(val, ans);
+                end = i;
             }
-            dp[i][j] = max(take, notTake);
-        }
-    }
-
-    return dp[n - 1][w];
-}
-
-
-int memo(int n, int w, vector<int> wt, vector<int> val, int ind) // O(n*w) time and O(n*w) space
-{
-    vvll dp(n, vll(w + 1, -1));
-
-    if(ind == 0)
-    {
-        if(wt[0] <= w)
-        {
-            return (w / wt[0]) * val[0];
-        }
-        return 0;
-    }
-    if(dp[ind][w] != -1)
-    {
-        return dp[ind][w];
-    }
-
-    int notTake = 0 + memo(n, w, wt, val, ind - 1);
-    int take = -INF;
-
-    if(wt[ind] <= w)
-    {
-        take = val[ind] + memo(n, w - wt[ind], wt, val, ind);
-    }
-
-    return dp[ind][w] = max(take, notTake);
-}
-
-int recurr(int w, vector<int> wt, vector<int> val, int ind) // O(2^n) time  and O(n) stack space
-{
-    if (ind == 0)
-    {
-        if (wt[0] <= w)
-        {
-            return (w / wt[0]) * val[0];
-        }
-        return 0;
-    }
-
-    int notTake = 0 + recurr(w, wt, val, ind - 1);
-    int take = -INF;
-    if (wt[ind] <= w)
-    {
-        take = val[ind] + recurr(w - wt[ind], wt, val, ind);
-    }
-
-    return max(take, notTake);
-}
-
-ll space(int w, vector<int> wt, vector<int> val, int n)
-{
-    vll prev(w + 1, 0);
-    vll curr(w + 1, 0);
-
-    f(j, 0, n)
-    {
-        if(wt[0] <= j)
-        {
-            prev[j] = j / wt[0] * val[0];
-        }
-    }
-
-    f(i,1,n)
-    {
-        f(j,0,w+1)
-        {
-            int notTake = prev[j];
-            int take = -INF;
-
-            if(wt[i] <= j)
-            {
-                take = val[i] + curr[j - wt[i]];
+            else{
+                dp[i][j] = 0;
             }
-            curr[j] = max(take, notTake);
         }
-        prev = curr;
     }
+    cout << end << endl;
+    string lcs = s1.substr(end - ans, ans);
+    cout << lcs << endl;
 
-    return prev[w];
-}
-
-void solve()
-{
-    int n, w;
-    cin >> n >> w;
-    vector<int> wt(n), val(n);
-    in_1D_arr(wt, n);
-    in_1D_arr(val, n);
-
-    cout << recurr(w, wt, val, n - 1) << endl;
-    cout << memo(n,w, wt, val, n - 1) << endl;
-    cout << table(n, w, wt, val, n) << endl;
-    cout << space(w, wt, val, n) << endl;
+    cout << ans << endl;
 }
 int main() {
 #ifdef parthgupta21
