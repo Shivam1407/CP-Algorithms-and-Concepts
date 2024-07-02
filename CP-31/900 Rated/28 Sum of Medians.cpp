@@ -87,16 +87,22 @@ void solve() {
     vector<lli> a(n * k);
     
     in_1D_arr(a, n * k);
-    srt(a);
-
-    lli mid = n / 2;
+    lli div = n / 2;
+    lli range = n * k;
+    int j = 0;
     lli sum = 0;
-    for (int i = mid-1; i < n*k-1; i+=n)
+
+    for (int i = range - 1 - div; i >= 0; i-=div+1)
     {
         sum += a[i];
-        cout << a[i] << " ";
+        j++;
+        if (j == k)
+        {
+            break;
+        }
     }
-    cout << sum << endl;
+
+    cout << sum << nline;
 }
 int main() {
 #ifdef parthgupta21
