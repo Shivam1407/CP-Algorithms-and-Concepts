@@ -82,25 +82,39 @@ ll phin(ll n) {ll number = n; if (n % 2 == 0) {number /= 2; while (n % 2 == 0) n
 ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
 /*--------------------------------------------------------------------------------------------------------------------------*/
 void solve() {
-    lli n;
+    ll n;
     cin >> n;
-    lli a[n];
-    in_1D_arr(a, n);
-
-    lli maxi = *max_element(a, a + n);
-    lli mini = *min_element(a, a + n);
-    if(maxi == mini){
-        cout << n << " ";
-        for (lli i = 1; i <= n-1; i++)
+    vector<ll> arr(n);
+    rep(i, n)
+    {
+        cin >> arr[i];
+    }
+    bool flag = 1;
+    vector<ll> temp(n);
+    iota(temp.begin(), temp.end(), 1);
+    for (int i = 0; i < n; i++)
+    {
+        ll cnt = 1;
+        while (arr[i] == arr[i + 1])
         {
-                cout << i << " ";
+            swap(temp[i], temp[i + 1]);
+            i++;
+            cnt++;
         }
-        cout << nline;
+        if (cnt == 1)
+        {
+            cout << -1 << endl;
+            flag = 0;
+            break;
+        }
     }
-    else{
-        cout << -1 << nline;
-        return;
+   if(flag){
+    rep(i, n)
+    {
+        cout << temp[i] << " ";
     }
+    cout << endl;
+}
 }
 int main() {
 #ifdef parthgupta21
